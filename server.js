@@ -95,7 +95,90 @@ app.get('/approve', (req, res) => {
   };
 
   console.log(`✅ Parent responded: ${type.toUpperCase()} for ID ${id} from ${ip}`);
-  res.send(`<h2>Thank you!</h2><p>Your response (<strong>${type}</strong>) has been recorded for request ID <strong>${id}</strong>.</p>`);
+  res.send(`
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>NMIMS Parent Response</title>
+      <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: #f8f9fa;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 40px;
+        }
+        .card {
+          background: #fff;
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          text-align: center;
+        }
+        img {
+          width: 120px;
+          margin-bottom: 20px;
+        }
+        .status {
+          font-size: 22px;
+          font-weight: bold;
+          color: ${type === 'approve' ? '#28a745' : '#dc3545'};
+        }
+        .info {
+          font-size: 14px;
+          color: #333;
+          margin-bottom: 15px;
+        }
+        ul {
+          text-align: left;
+          font-size: 13px;
+          line-height: 1.6;
+          color: #555;
+          padding: 10px 20px;
+        }
+        li {
+          margin-bottom: 8px;
+        }
+        .footer {
+          font-size: 12px;
+          margin-top: 25px;
+          color: #999;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/56/NMIMS_University_Logo.svg/512px-NMIMS_University_Logo.svg.png" alt="NMIMS Logo" />
+        
+        <div class="status">
+          ${type === 'approve' ? '✅ Permission Granted' : '❌ Permission Denied'}
+        </div>
+        
+        <p class="info">Your response has been recorded.</p>
+        <p class="info"><strong>Request ID:</strong> ${id}</p>
+
+        <ul>
+          <li>The institution holds no responsibility for incidents outside the campus post-approval.</li>
+          <li>Students must carry their college ID card at all times.</li>
+          <li>Any misuse of outpass will lead to disciplinary action.</li>
+          <li>This permission is valid only for the mentioned purpose and time frame.</li>
+          <li>The outpass is non-transferable and applies to one-time use only.</li>
+          <li>Parental approval does not override college regulations and policies.</li>
+          <li>Emergency services and transportation are not provided by the institution.</li>
+          <li>Management reserves the right to revoke permission at any point without notice.</li>
+        </ul>
+
+        <div class="footer">
+          NMIMS Student Portal System
+        </div>
+      </div>
+    </body>
+  </html>
+`);
 });
 
 // 🚀 Start server
