@@ -22,10 +22,12 @@ app.post('/send-email', async (req, res) => {
     console.log("⚠️ Missing some required fields!");
   }
 
-  // Generate request ID (later replace with DB)
-  const requestId = Math.random().toString(36).substr(2, 9);
-  const approveLink = `http://localhost:3001/approve?id=${requestId}&type=approve`;
-  const rejectLink = `http://localhost:3001/approve?id=${requestId}&type=reject`;
+  const base = "https://nmims-portal.onrender.com"; // ← replace this with your actual Render URL
+
+const requestId = Math.random().toString(36).substr(2, 9);
+const approveLink = `${base}/approve?id=${requestId}&type=approve`;
+const rejectLink = `${base}/approve?id=${requestId}&type=reject`;
+
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
